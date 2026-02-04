@@ -47,3 +47,20 @@ stddev(loan_status)
 from credit_risk_dataset
 group by cb_person_cred_hist_length
 order by Default_Percentage desc;
+
+# Loan default percentage for loan to income ratio 
+select 
+case
+when (loan_amnt / person_income) < .1 then "0% to 10%"
+when (loan_amnt / person_income) < .2 then "10% to 20%"
+when (loan_amnt / person_income) < .3 then "20% to 30%"
+when (loan_amnt / person_income) < .4 then "30% to 40%"
+when (loan_amnt / person_income) < .5 then "40% to 50%"
+else "+50%"
+end as loan_to_income_ratio,
+count(*) as total_loan,
+avg(loan_status) as Default_Percentage,
+stddev(loan_status)
+from credit_risk_dataset
+group by loan_to_income_ratio
+order by Default_Percentage desc;
