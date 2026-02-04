@@ -38,3 +38,12 @@ stddev(loan_status) as Standard_Deviation
 from credit_risk_dataset
 group by loan_grade
 order by loan_grade;
+
+# Credit history and loan default percentage
+select cb_person_cred_hist_length,
+count(*) as Total_loan,
+avg(loan_status) as Default_Percentage,
+stddev(loan_status)
+from credit_risk_dataset
+group by cb_person_cred_hist_length
+order by Default_Percentage desc;
