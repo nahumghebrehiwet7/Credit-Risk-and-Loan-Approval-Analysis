@@ -82,3 +82,30 @@ from credit_risk_dataset
 group by loan_to_income_ratio
 order by Default_Percentage desc;
 
+#Risk Category
+WITH borrower_metrics AS (
+    SELECT *,
+        loan_amnt / person_income AS income_to_loan_ratio
+    FROM credit_risk_dataset
+)
+SELECT
+    CASE
+        when income_to_loan_ratio > 0.3 THEN 'High Risk'
+        when income_to_loan_ratio > 0.25 THEN 'Moderate Risk'
+        ELSE 'Low Risk'
+    END AS risk_category,
+    COUNT(*) AS total_loans,
+    AVG(loan_status) AS default_rate
+FROM borrower_metrics
+GROUP BY risk_category
+ORDER BY default_rate DESC;
+
+#Risk Rank from loan grade, default on file, and percent default
+select 
+loan_grade,
+cb_person_default_on_file,
+avg(loan_status) as Percent_Default,
+rank() over(order by avg(loan_status) desc) as risk_rank
+from credit_risk_dataset
+group by loan_grade, cb_person_default_on_file
+order by Percent_Default desc;
