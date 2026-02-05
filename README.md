@@ -82,7 +82,7 @@ from credit_risk_dataset
 group by loan_to_income_ratio
 order by Default_Percentage desc;
 
-#Risk Category
+# Risk Category
 WITH borrower_metrics AS (
     SELECT *,
         loan_amnt / person_income AS income_to_loan_ratio
@@ -100,7 +100,7 @@ FROM borrower_metrics
 GROUP BY risk_category
 ORDER BY default_rate DESC;
 
-#Risk Rank from loan grade, default on file, and percent default
+# Risk Rank from loan grade, default on file, and percent default
 select 
 loan_grade,
 cb_person_default_on_file,
