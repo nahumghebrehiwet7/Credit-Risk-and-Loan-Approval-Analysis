@@ -64,3 +64,21 @@ stddev(loan_status)
 from credit_risk_dataset
 group by loan_to_income_ratio
 order by Default_Percentage desc;
+
+# Loan default percentage for loan to income ratio 2
+select 
+case
+when (loan_amnt / person_income) < .2 then "<20%"
+when (loan_amnt / person_income) between .2 and .25 then "20% to 25%"
+when (loan_amnt / person_income) between .25 and .3 then "25% to 30%"
+when (loan_amnt / person_income) between .3 and .35 then "30% to 35%"
+when (loan_amnt / person_income) between .35 and .4 then "35% to 40%"
+else "+40%"
+end as loan_to_income_ratio,
+count(*) as total_loan,
+avg(loan_status) as Default_Percentage,
+stddev(loan_status)
+from credit_risk_dataset
+group by loan_to_income_ratio
+order by Default_Percentage desc;
+
