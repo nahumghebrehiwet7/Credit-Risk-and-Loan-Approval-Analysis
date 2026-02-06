@@ -109,3 +109,16 @@ rank() over(order by avg(loan_status) desc) as risk_rank
 from credit_risk_dataset
 group by loan_grade, cb_person_default_on_file
 order by Percent_Default desc;
+
+#Age group and loan intent
+select
+case
+    when person_age < 25 THEN '<25'
+    when person_age < 30 THEN '25-30'
+    else '30+'
+end as age_group,
+loan_intent,
+AVG(loan_status) AS default_rate,
+RANK() OVER(ORDER BY AVG(loan_status) DESC) AS risk_rank
+from credit_risk_dataset
+group by age_group, loan_intent;
