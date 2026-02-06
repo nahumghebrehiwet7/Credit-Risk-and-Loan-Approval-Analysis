@@ -110,7 +110,7 @@ from credit_risk_dataset
 group by loan_grade, cb_person_default_on_file
 order by Percent_Default desc;
 
-#Age group and loan intent
+# Age group and loan intent
 select
 case
     when person_age < 25 THEN '<25'
